@@ -50,7 +50,9 @@
 \email{lzongxun@u.nus.edu}
 
 \begin{abstract}
-This project seeks to assess and improve the GECToR model capabilities, predominantly used for correcting grammatical errors in texts that are well-composed and polished, for use in "noisy" textual environments rife with less structured language. We intend to complement the model with a context-aware typo correction model, thereby fully leveraging the power of transformers to optimize its efficacy in both typo rectification and grammatical error resolution.
+Text correction systems (e.g., spell checkers) have been used to improve the quality of computerized text by detecting and correcting errors. In this project, we investigated usage of GECToR's capabilities, predominantly used for correcting grammatical errors in texts that are well-composed and polished, for use in "noisy" textual environments rife with less structured language. We have found that GECToR is insufficiently robust for correcting spelling errors and word variances, particularly, suffering from overcorrections (text rewrites). Thus, we proposed a neural-based text corrector with a two-stage structure to alleviate issues of overcorrections while exploiting the benefits of a neural corrector. Our method consists of a rule-based error detector and an attention neural error corrector with contextual attention.  This novel architecture allows GECToR to produce corrections based on both the erroneous text and its context without the need for an end-to-end structure. 
+
+% This project seeks to assess and improve the GECToR model capabilities, predominantly used for correcting grammatical errors in texts that are well-composed and polished, for use in "noisy" textual environments rife with less structured language. We intend to complement the model with a context-aware typo correction model, thereby fully leveraging the power of transformers to optimize its efficacy in both typo rectification and grammatical error resolution.
 \end{abstract}
 \maketitle % important, do not remove
 %%% VLDB block start %%%
@@ -69,6 +71,18 @@ To this end, we employ a 2-phase approach: The first model or phase is designed 
 
 \section{Preliminaries}
 
+\begin{figure*}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/overview}
+    \caption{Overview of textual correction system}
+    \label{fig:enter-label}
+\end{figure*}
+
+\subsection{Data Augmentation}
+
+We experimented with injecting noise into the dataset during model pretraining to help increase the number of erroneous examples in the training set. Our method was inspired by the data augmentation technique employed in the copy- augmented transformer [12]. However, we inject character errors rather than word errors. We inject three types of errors:
+a random character deletion, a random character substitu- tion, and a random character insertion. Each type of error possesses a 3\% probability of appearing for every position in the text. When a character is replaced or inserted, the replacement character is chosen at random based on the distribution of that character in the training set.
+
 \subsection{An overview of GECToR}
 
 Here's an example of how to reference \autoref{fig:duck}.
@@ -79,20 +93,6 @@ Here's an example of how to reference \autoref{fig:duck}.
   \caption{Quack quack}
   \label{fig:duck}
 \end{figure}
-
-\begin{table*}[t]
-  \caption{A double column table.}
-  \label{tab:commands}
-  \begin{tabular}{ccl}
-    \toprule
-    A Wide Command Column & A Random Number & Comments\\
-    \midrule
-    \verb|\tabular| & 100& The content of a table \\
-    \verb|\table|  & 300 & For floating tables within a single column\\
-    \verb|\table*| & 400 & For wider floating tables that span two columns\\
-    \bottomrule
-  \end{tabular}
-\end{table*}
 
 \subsection{Spelling Correction Models}
 
@@ -115,6 +115,20 @@ Curabitur vitae nulla dapibus, ornare dolor in, efficitur enim. Cras fermentum f
 \section{Conclusion}
 
 Curabitur vitae nulla dapibus, ornare dolor in, efficitur enim. Cras fermentum facilisis elit vitae egestas. Nam vulputate est non tellus efficitur pharetra. Vestibulum ligula est, varius in suscipit vel, porttitor id massa. Cras facilisis suscipit orci, ac tincidunt erat.
+
+\begin{table*}[t]
+  \caption{A double column table.}
+  \label{tab:commands}
+  \begin{tabular}{ccl}
+    \toprule
+    A Wide Command Column & A Random Number & Comments\\
+    \midrule
+    \verb|\tabular| & 100& The content of a table \\
+    \verb|\table|  & 300 & For floating tables within a single column\\
+    \verb|\table*| & 400 & For wider floating tables that span two columns\\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 \section{References}
 
