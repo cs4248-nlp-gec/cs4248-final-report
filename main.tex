@@ -9,7 +9,7 @@
 \newcommand\vldbpagestyle{plain} 
 
 \begin{document}
-\title{}
+\title{Enhancing Transformer-Based Grammatical Error Correction with Contextual Typo Adaptation for Noisy Text Environments}
 
 %%
 %% The "author" command and its associated commands are used to define the authors and their affiliations.
@@ -50,15 +50,12 @@
 \email{lzongxun@u.nus.edu}
 
 \begin{abstract}
-Write abstract here
+This project seeks to assess and improve the GECToR model capabilities, predominantly used for correcting grammatical errors in texts that are well-composed and polished, for use in "noisy" textual environments rife with less structured language. We intend to complement the model with a context-aware typo correction model, thereby fully leveraging the power of transformers to optimize its efficacy in both typo rectification and grammatical error resolution.
 \end{abstract}
 \maketitle % important, do not remove
-
-%%% do not modify the following VLDB block %%
 %%% VLDB block start %%%
 \ifdefempty{\vldbavailabilityurl}{}{
-\vspace{.1cm}
-\begingroup\small\noindent\raggedright\textbf{Artifact Availability:}\\
+\begingroup\small\noindent\raggedright\textbf{Artifact Availability:}
 The source code, data, and/or other artifacts have been made available at \url{\vldbavailabilityurl}.
 \endgroup
 }
@@ -66,7 +63,9 @@ The source code, data, and/or other artifacts have been made available at \url{\
 
 \section{Introduction}
 
-Write Introduction
+Grammar error correction (GEC) is one of the most prominent tasks in natural language processing, with numerous transformer-based models [insert references to other models] gaining prominence in recent years. Of particular interest is the tagging-based GECToR model, developed by [insert names and reference here] (https://aclanthology.org/2020.bea-1.16.pdf), which obtained State-Of-The-Art (SOTA) performance when tested against the CoNLL-2014 and BEA-2019 datasets. One shortcoming, however, is its capacity to handle spelling errors, otherwise colloquially referred to as typos. While preliminary observations found a decent capacity to handle basic spelling errors, it was generally unable to handle more complex typos (A more thorough analysis is provided in Section [insert section here]). We attribute this shortcoming primarily due to the scale of GECToR model itself: intuitively, we do not expect a model, trained primarily on the more general task of grammar correction, to be similarly capable on the more specific task of spelling correction. The focus of the paper, therefore, is to develop and refine GECToR to effectively handle and accurately correct typos and semantic errors commonly found in "noisy" digital text environments, while respecting and preserving the unique communicative styles and intentions of users. 
+
+To this end, we employ a 2-phase approach: The first model or phase is designed to parse and pinpoint typographical errors or other similar mistakes that tend to occur in digital communication. Once these initial errors are detected and fixed, the corrected sentence is then passed to the second phase or model, which focuses on more complex grammatical corrections. This step ensures that grammar is checked in a relatively clean text, possibly reducing the complexity of this task. We explore and compare the effectiveness of 3 different types of spelling correction models in the first phase: a naive, edit-distance based model proposed by Norvig (https://norvig.com/spell-correct.html), a statistical-based n-grams model, and a transformer-based sequence-to-sequence model. GeCToR is primarily employed for the second-phase model, with further comparisons done using pre-trained and re-trained versions of the model. 
 
 \section{Preliminaries}
 
